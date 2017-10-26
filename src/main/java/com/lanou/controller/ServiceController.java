@@ -1,6 +1,7 @@
 package com.lanou.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.lanou.bean.Account;
 import com.lanou.bean.Cost;
 import com.lanou.bean.Servicee;
@@ -242,6 +243,27 @@ public class ServiceController {
 
         return new AjaxResult(cost);
     }
+
+    /**
+     * 分页功能
+     */
+    @ResponseBody
+    @RequestMapping(value = "/ServicePage")
+    public List<Servicee> students(@RequestParam("no")Integer pageNo,
+                                  @RequestParam("size")Integer pageSize){
+
+//        System.out.println("pageNo:---"+pageNo+"pageSize:---"+pageSize);
+
+        return service.findWithPageInfo(pageNo,pageSize);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ServiceAllPage")
+    public PageInfo<Servicee> pageInfo(@RequestParam("pageSizes")Integer pageSize){
+
+        return service.getPageInfo(pageSize);
+    }
+
 
 
 }

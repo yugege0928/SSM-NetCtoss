@@ -213,7 +213,7 @@ public class CostController {
      * 12.分页
      */
     @ResponseBody
-    @RequestMapping(value = "/stu",method = RequestMethod.POST)
+    @RequestMapping(value = "/stu")
     public List<Cost> students(@RequestParam("no")Integer pageNo,
                                   @RequestParam("size")Integer pagaSize){
 
@@ -223,10 +223,22 @@ public class CostController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/page1",method = RequestMethod.POST)
+    @RequestMapping(value = "/page1")
     public PageInfo<Cost> pageInfo(@RequestParam("pageSize")Integer pageSize){
 
         return service.getPageInfo(pageSize);
+    }
+
+    /**
+     * 排序
+     */
+    @RequestMapping(value = "/sort")
+    public PageInfo<Cost> sortByBaseCost(@RequestParam("no")Integer pageNO,
+                                         @RequestParam("size")Integer pageSize,
+                                         @RequestParam("flag")Integer flag){
+        PageInfo<Cost> pageInfo = service.pageInfoSort(pageNO,pageSize,flag);
+
+        return pageInfo;
     }
 
 }

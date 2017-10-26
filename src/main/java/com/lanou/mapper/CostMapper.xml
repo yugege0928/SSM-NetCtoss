@@ -36,6 +36,26 @@
         WHERE name = #{type}
     </select>
 
+    <select id="findByBaseCostAsc" resultMap="BaseResultMap" >
+        SELECT <include refid="Base_Column_List"/>
+        FROM cost ORDER BY base_cost ASC
+    </select>
+
+    <select id="findByByBaseDurationAsc" resultType="com.lanou.bean.Cost">
+        SELECT <include refid="Base_Column_List"/>
+        FROM cost ORDER BY base_duration ASC
+    </select>
+
+    <select id="findByBaseCostDesc" resultType="com.lanou.bean.Cost">
+        SELECT <include refid="Base_Column_List"/>
+        FROM cost ORDER BY base_cost DESC
+    </select>
+
+    <select id="findByByBaseDurationDesc" resultType="com.lanou.bean.Cost">
+        SELECT <include refid="Base_Column_List"/>
+        FROM cost ORDER BY base_duration DESC
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cost
     where cost_id = #{costId,jdbcType=INTEGER}

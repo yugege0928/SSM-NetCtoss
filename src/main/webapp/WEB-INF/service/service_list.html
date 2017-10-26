@@ -72,7 +72,7 @@
                 }
             })
         }
-        findAllService();
+//        findAllService();
 
         function addNewTr(result) {
 
@@ -135,7 +135,99 @@
 
             })
         }
-        
+
+        //分页下显示全部
+        function allService() {
+            $.ajax({
+                url: "/ServiceAllPage",
+                data: {
+                    pageSizes: 4
+                },
+                success: function (result) {
+
+                    var first = $("<a></a>").html("首页").click(somePage).attr("id", 1);
+                    $("#pages").append(first);
+
+                    for (var i = 0; i < result.pages; i++) {
+                        var td = $("<a href='#'></a>").html((i + 1)).click(somePage);
+                        $("#pages").append(td);
+                    }
+                    var last = $("<a></a>").html("尾页").click(somePage).attr("id", result.pages);
+                    $("#pages").append(last);
+                }
+            })
+        }
+        allService()
+
+        firstPage()
+
+        function firstPage() {
+            $.ajax({
+                url: "/ServicePage",
+                data: {
+                    no: 1,
+                    size: 3
+                },
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        addNewTr(result[i])
+                    }
+                }
+            })
+        }
+
+        function somePage() {
+            $("#tab").children().remove();
+
+            if ($(this).html() == "首页") {
+                $("#tab").children().remove();
+                $.ajax({
+                    type: "post",
+                    url: "/ServicePage",
+                    data: {
+                        no: 1,
+                        size: 3
+                    },
+                    success: function (result) {
+                        for (var i = 0; i < result.length; i++) {
+                            addNewTr(result[i])
+                        }
+                    }
+                })
+            }
+
+            if ($(this).html() == "尾页") {
+                $("#tab").children().remove();
+                $.ajax({
+                    type: "post",
+                    url: "/ServicePage",
+                    data: {
+                        no: $(this).attr("id"),
+                        size: 3
+                    },
+                    success: function (result) {
+                        for (var i = 0; i < result.length; i++) {
+                            addNewTr(result[i])
+                        }
+                    }
+                })
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/ServicePage",
+                data: {
+                    no: $(this).html(),
+                    size: 3
+                },
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        addNewTr(result[i])
+                    }
+                }
+            })
+        }
+
 
     </script>
 </head>

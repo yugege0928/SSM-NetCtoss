@@ -87,6 +87,35 @@ public class CostServiceImpl implements CostService{
         return pageInfo;
     }
 
+    //通过升降序查询
+    public PageInfo<Cost> pageInfoSort(Integer pageNo,
+                                       Integer pageSize,
+                                       Integer flag){
+        List<Cost> costs = null;
+
+        //判断参数的合法性
+        pageNo = pageNo == null?1:pageNo;
+
+        pageSize = pageSize == null?3:pageSize;
+
+        PageHelper.startPage(pageNo,pageSize);
+
+        if (flag == 1){
+            costs = mapper.findByBaseCostAsc();
+        }else if (flag ==2){
+            costs = mapper.findByBaseCostDesc();
+        }else if (flag == 3){
+            costs = mapper.findByByBaseDurationAsc();
+        }else {
+            costs = mapper.findByByBaseDurationDesc();
+        }
+
+        PageInfo<Cost> pageInfo = new PageInfo<Cost>(costs);
+
+        return pageInfo;
+    }
+
+
     @Override
     public Cost findByType(String type) {
         return mapper.findByType(type);

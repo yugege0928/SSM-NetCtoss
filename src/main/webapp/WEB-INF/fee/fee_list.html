@@ -76,7 +76,6 @@
         //分页
         function page() {
             $.ajax({
-                type: "post",
                 url: "/page1",
                 data: {
                     pageSize: 5
@@ -102,7 +101,6 @@
         stus2();
         function stus2() {
             $.ajax({
-                type: "post",
                 url: "/stu",
                 data: {
                     no: 1,
@@ -122,7 +120,6 @@
             if ($(this).html() == "首页") {
                 $("#tab").children().remove();
                 $.ajax({
-                    type: "post",
                     url: "/stu",
                     data: {
                         no: 1,
@@ -139,7 +136,6 @@
             if ($(this).html() == "尾页") {
                 $("#tab").children().remove();
                 $.ajax({
-                    type: "post",
                     url: "/stu",
                     data: {
                         no: $(this).attr("id"),
@@ -154,7 +150,6 @@
             }
 
             $.ajax({
-                type: "post",
                 url: "/stu",
                 data: {
                     no: $(this).html(),
@@ -224,6 +219,94 @@
             })
         }
 
+        //时长升序降序
+        function sortByBaseCost(btnObj) {
+            //升序
+            if (btnObj.className =="sort_desc"){
+                btnObj.className = "sort_asc";
+                $.ajax({
+                    url:"/sort",
+                    data:{
+                        no:null,
+                        size:null,
+                        flag:1
+                    },
+                    success:function (result) {
+                        console.log(result)
+                        $(".emp").remove()
+                        $.each(result.list,function (i,domEle) {
+                            addNewTr(domEle)
+                        })
+                    }
+                })
+            }
+
+            //降序
+            else {
+                btnObj.className = "sort_desc";
+                $.ajax({
+                    url:"/sort",
+                    data:{
+                        no:null,
+                        size:null,
+                        flag:2
+                    },
+                    success:function (result) {
+                        console.log(result)
+                        $(".emp").remove()
+                        $.each(result.list, function (i, domEle) {
+                            addNewTr(domEle)
+                        })
+                    }
+                })
+            }
+        }
+
+
+        //基费升序降序
+        function sortByBaseDuration(btnObj) {
+
+            //升序
+            if (btnObj.className ==" sort_desc"){
+                btnObj.className = "sort_asc";
+                $.ajax({
+                    url:"/sort",
+                    data:{
+                        no:null,
+                        size:null,
+                        flag:3
+                    },
+                    success:function (result) {
+                        console.log(result)
+                        $(".emp").remove()
+                        $.each(result.list,function (i, domEle) {
+                            addNewTr(domEle)
+                        })
+                    }
+                })
+            }
+
+            //降序
+            else {
+                btnObj.className = "sort_desc";
+                $.ajax({
+                    url:"/sort",
+                    data:{
+                        no:null,
+                        size:null,
+                        flag:4
+                    },
+                    success:function (result) {
+                        console.log(result)
+                        $(".emp").remove()
+                        $.each(result.list,function (i, domEle) {
+                            addNewTr(domEle);
+                        })
+                    }
+                })
+            }
+        }
+
 
     </script>
 </head>
@@ -255,9 +338,9 @@
     <!--排序-->
     <div class="search_add">
         <div>
-            <input type="button" value="月租" class="sort_asc" onclick="sort(this);"/>
-            <input type="button" value="基费" class="sort_asc" onclick="sort(this);"/>
-            <input type="button" value="时长" class="sort_asc" onclick="sort(this);"/>
+            <!--<input type="button" value="月租" class="sort_asc" onclick="sort(this);"/>-->
+            <input type="button" value="基费" class="sort_asc" onclick="sortByBaseCost(this);"/>
+            <input type="button" value="时长" class="sort_asc" onclick="sortByBaseDuration(this);"/>
         </div>
         <input type="button" value="增加" class="btn_add" onclick="location.href='/cost_add';"/>
     </div>
@@ -283,7 +366,7 @@
             </tr>
             </thead>
 
-            <tbody id="tab">
+            <tbody id="tab" class="empp">
 
             </tbody>
 

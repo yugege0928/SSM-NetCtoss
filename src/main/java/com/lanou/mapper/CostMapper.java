@@ -24,4 +24,12 @@ public interface CostMapper {
 
     Cost findByType(String type);
 
+    //升序查询
+    List<Cost> findByBaseCostAsc();
+    List<Cost> findByByBaseDurationAsc();
+
+    //降序查询
+    List<Cost> findByBaseCostDesc();
+    List<Cost> findByByBaseDurationDesc();
+
 }

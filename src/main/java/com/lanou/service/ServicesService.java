@@ -2,6 +2,8 @@ package com.lanou.service;
 
 
 
+import com.github.pagehelper.PageInfo;
+import com.lanou.bean.Account;
 import com.lanou.bean.Servicee;
 
 import java.util.List;
@@ -20,6 +22,8 @@ public interface ServicesService {
 
      int deleteServicee(Integer id);
 
+     List<Servicee> findWithPageInfo(Integer pageNo, Integer pageSize);
 
+     PageInfo<Servicee> getPageInfo(Integer pageSize);
 
 }
