@@ -113,7 +113,7 @@ public class ServiceController {
 
         session.setAttribute("findByIdService",serviceById);
 
-        System.out.println("serviceById:---"+serviceById);
+//        System.out.println("serviceById:---"+serviceById);
 
         return new AjaxResult(serviceById);
     }
@@ -127,20 +127,50 @@ public class ServiceController {
         return new AjaxResult(findByIdService);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/findBSID2")
+    public AjaxResult frontPageFindByID2(HttpServletRequest request){
+
+        Servicee findByIdService = (Servicee) request.getSession().getAttribute("findByIdService");
+
+        System.out.println(findByIdService.getCostId());
+
+        Cost cost = costServicee.findById(findByIdService.getCostId());
+
+        return new AjaxResult(cost);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findBSID3")
+    public AjaxResult frontPageFindByID3(HttpServletRequest request){
+
+        Servicee findByIdService = (Servicee) request.getSession().getAttribute("findByIdService");
+
+        Account account = accountService.findById(findByIdService.getAccountId());
+
+        return new AjaxResult(account);
+    }
+
+
     /**
      * 更改(更新)
      */
     @ResponseBody
     @RequestMapping(value = "/updateService",method = RequestMethod.POST)
-    public AjaxResult frontPage(Servicee servicee){
+    public AjaxResult frontPage(@RequestParam("CType")String type,
+                                HttpServletRequest request){
 
-        int i = service.updataService(servicee);
+        Servicee findByIdService = (Servicee) request.getSession().getAttribute("findByIdService");
+
+        findByIdService.setCostId(costServicee.findByType(type).getCostId());
+
+        int i = service.updataService(findByIdService);
 
         if (i > 0){
             System.out.println("更新成功");
         }
 
-        return new AjaxResult(servicee);
+        return new AjaxResult(findByIdService);
     }
 
 
@@ -153,25 +183,41 @@ public class ServiceController {
     @RequestMapping(value = "/deleteSe")
     public AjaxResult frontPageDeleteService(@RequestParam("delSId")Integer id){
 
-        int i = service.deleteServicee(id);
+        Servicee byId = service.findById(id);
+
+        byId.setStatus("2");
+
+        int i = service.updataService(byId);
 
         if (i > 0){
-            System.out.println("删除成功");
+            System.out.println("标记删除成功");
         }
 
         return new AjaxResult();
     }
 
     /**
-     * 更改启用状态
+     * 更改启用/暂停状态
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/useSer")
-    public AjaxResult frontPageUse(){
+    public AjaxResult frontPageUse(@RequestParam("userId")Integer id){
+
+        Servicee byId = service.findById(id);
+
+        byId.setStatus("1");
+
+        int i = service.updataService(byId);
+
+        if (i > 0){
+            System.out.println("启用成功");
+        }
+
+
+
         return new AjaxResult();
     }
-
 
     /**
      * 输入身份证查出ID

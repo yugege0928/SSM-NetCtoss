@@ -20,22 +20,29 @@
                     divResult.style.display = "none";
             }
 
-            getAllService()
-
+            getAllService();
+            getAllType();
             function getAllService() {
                 $.ajax({
                     type:"post",
                     url:"/findBSID",
-                    data:{
-
-                    },
                     success:function (result) {
+                        console.log(result)
                         $("#userID").val(result.data.serviceId),
                         $("#OSname").val(result.data.osUsername),
                         $("#IP").val(result.data.unixHost)
+                    }
+                })
+            }
 
+            function getAllType() {
+                $.ajax({
+                    type:"post",
+                    url:"/findAllCost",
+                    success:function (result) {
+                        console.log(result)
                         for (var i=0;i < result.data.length;i++){
-                            $("#sel").val(result.data[i].cost.name)
+                            $("#sel").append("<option>"+result.data[i].name+"</option>")
                         }
                     }
                 })
@@ -46,10 +53,12 @@
                     type:"post",
                     url:"/updateService",
                     data:{
-                        osUsername:$("OSname").val(),
-                        unixHost:$("IP").val()
+                        osUsername:$("#OSname").val(),
+                        unixHost:$("#IP").val(),
+                        CType:$("#sel option:selected").text()
                     },
                     success:function (result) {
+                        alert(66)
                         console.log(result)
                         window.location.href = "/se_list"
                     }
@@ -103,7 +112,6 @@
                 <div class="text_info clearfix"><span>资费类型：</span></div>
                 <div class="input_info">
                     <select class="width150" id="sel">
-
                     </select>
                     <div class="validate_msg_long">请修改资费类型，或者取消修改操作。</div>                      
                 </div>

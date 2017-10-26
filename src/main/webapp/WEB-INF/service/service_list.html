@@ -125,9 +125,9 @@
 
             $.ajax({
                 type:"post",
-                url:"/",
+                url:"/useSer",
                 data:{
-                    useID:useNumber
+                    userId:useNumber
                 },
                 success:function (result) {
                     window.location.href = "/se_list"
