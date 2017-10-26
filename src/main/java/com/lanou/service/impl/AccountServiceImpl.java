@@ -78,7 +78,7 @@ public class AccountServiceImpl implements AccountService {
         //使用PageInfo对结果进行包装
         PageInfo<Account> pageInfo = new PageInfo<Account>(studentList);
 
-        System.out.println(pageInfo);
+//        System.out.println(pageInfo);
 
         return pageInfo;
     }

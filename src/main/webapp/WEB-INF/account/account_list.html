@@ -6,10 +6,8 @@
     <title>云科技</title>
     <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css"/>
     <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css"/>
-
     <script src="/js/jquery-3.2.1.js"></script>
-
-    <script>
+    <script type="text/javascript">
         //删除
         function deleteAccount() {
             var r = window.confirm("确定要删除此账务账号吗？\r\n删除后将不能恢复，且会删除其下属的所有业务账号。");
@@ -24,41 +22,38 @@
         //显示全部,加分页
         function allAccount() {
             $.ajax({
-                type: "post",
                 url: "/APage",
                 data: {
-//                    pageNo: 1,
-                    pageSize: 5
+                    pageSizes: 4
                 },
                 success: function (result) {
-                    alert(result.pages)
+
                     var first = $("<a></a>").html("首页").click(stus).attr("id", 1);
-                    $("#tab2").append(first);
+                    $("#pages").append(first);
 
                     for (var i = 0; i < result.pages; i++) {
                         var td = $("<a href='#'></a>").html((i + 1)).click(stus);
-                        $("#tab2").append(td);
+                        $("#pages").append(td);
                     }
-
                     var last = $("<a></a>").html("尾页").click(stus).attr("id", result.pages);
-                    $("#tab2").append(last);
+                    $("#pages").append(last);
                 }
             })
         }
-                allAccount();
-                stus2();
+        allAccount()
+
+        stus2()
+
         function stus2() {
             $.ajax({
-                type: "post",
                 url: "/AccountPage",
-
                 data: {
                     no: 1,
-                    size: 5
+                    size: 3
                 },
                 success: function (result) {
                     for (var i = 0; i < result.length; i++) {
-                        addNewTr(result[i])
+                        addNewTrr(result[i])
                     }
                 }
             })
@@ -74,7 +69,7 @@
                     url: "/AccountPage",
                     data: {
                         no: 1,
-                        size: 5
+                        size: 3
                     },
                     success: function (result) {
                         for (var i = 0; i < result.length; i++) {
@@ -91,7 +86,7 @@
                     url: "/AccountPage",
                     data: {
                         no: $(this).attr("id"),
-                        size: 5
+                        size: 3
                     },
                     success: function (result) {
                         for (var i = 0; i < result.length; i++) {
@@ -106,7 +101,7 @@
                 url: "/AccountPage",
                 data: {
                     no: $(this).html(),
-                    size: 5
+                    size: 3
                 },
                 success: function (result) {
                     for (var i = 0; i < result.length; i++) {
@@ -115,7 +110,6 @@
                 }
             })
         }
-
 
         //        直接查询并显示全部
         function findAllAccount() {
@@ -130,7 +124,7 @@
                 }
             })
         }
-//        findAllAccount();
+        //        findAllAccount();
 
         function addNewTrr(result) {
 
@@ -194,7 +188,6 @@
 
         }
 
-
     </script>
 </head>
 <body>
@@ -222,7 +215,7 @@
 <!--导航区域结束-->
 <!--主要区域开始-->
 <div id="main">
-    <form action="" method="">
+    <!--<form action="" method="">-->
         <!--查询-->
         <div class="search_add">
             <div>身份证：<input type="text" value="不验证" class="text_search"/></div>
@@ -305,6 +298,7 @@
                 7、删除账务账号，同时删除下属的所有业务账号。</p>
         </div>
         <!--分页-->
+
         <center>
             <div id="pages">
                 <!--<a href="#">首页</a>-->
@@ -318,7 +312,8 @@
                 <!--<a href="#">末页</a>-->
             </div>
         </center>
-    </form>
+
+    <!--</form>-->
 </div>
 <!--主要区域结束-->
 <div id="footer">

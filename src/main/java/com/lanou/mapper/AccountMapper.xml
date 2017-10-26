@@ -247,7 +247,7 @@
     <select id="findAllAccount" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM account;
+    FROM account
   </select>
 
     <select id="selectByPrimaryKey" resultType="com.lanou.bean.Account" resultMap="BaseResultMap">

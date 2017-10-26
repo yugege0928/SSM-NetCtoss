@@ -146,18 +146,14 @@ public class AccountController {
     public List<Account> students(@RequestParam("no")Integer pageNo,
                                @RequestParam("size")Integer pageSize){
 
-        System.out.println("pageNo:---"+pageNo+"pageSize:---"+pageSize);
+//        System.out.println("pageNo:---"+pageNo+"pageSize:---"+pageSize);
 
         return service.findWithPageInfo(pageNo,pageSize);
     }
 
     @ResponseBody
     @RequestMapping(value = "/APage")
-    public PageInfo<Account> pageInfo(@RequestParam("pageSize")Integer pageSize){
-
-        System.out.println("666");
-
-        System.out.println(pageSize);
+    public PageInfo<Account> pageInfo(@RequestParam("pageSizes")Integer pageSize){
 
         return service.getPageInfo(pageSize);
     }
