@@ -41,17 +41,17 @@
         FROM cost ORDER BY base_cost ASC
     </select>
 
-    <select id="findByByBaseDurationAsc" resultType="com.lanou.bean.Cost">
+    <select id="findByByBaseDurationAsc" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/>
         FROM cost ORDER BY base_duration ASC
     </select>
 
-    <select id="findByBaseCostDesc" resultType="com.lanou.bean.Cost">
+    <select id="findByBaseCostDesc" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/>
         FROM cost ORDER BY base_cost DESC
     </select>
 
-    <select id="findByByBaseDurationDesc" resultType="com.lanou.bean.Cost">
+    <select id="findByByBaseDurationDesc" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/>
         FROM cost ORDER BY base_duration DESC
     </select>

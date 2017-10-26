@@ -232,11 +232,20 @@ public class CostController {
     /**
      * 排序
      */
+    @ResponseBody
     @RequestMapping(value = "/sort")
     public PageInfo<Cost> sortByBaseCost(@RequestParam("no")Integer pageNO,
                                          @RequestParam("size")Integer pageSize,
                                          @RequestParam("flag")Integer flag){
         PageInfo<Cost> pageInfo = service.pageInfoSort(pageNO,pageSize,flag);
+
+//        System.out.println("pageInfo:---"+pageInfo);
+
+//        List<Cost> list = pageInfo.getList();
+//
+//        for (Cost cost : list) {
+//            System.out.println("cost:---"+cost);
+//        }
 
         return pageInfo;
     }

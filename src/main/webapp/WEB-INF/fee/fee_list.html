@@ -9,12 +9,12 @@
     <script src="/js/jquery-3.2.1.js"></script>
     <script type="text/javascript">
         //排序按钮的点击事件
-        function sort(btnObj) {
-            if (btnObj.className == "sort_desc")
-                btnObj.className = "sort_asc";
-            else
-                btnObj.className = "sort_desc";
-        }
+//        function sort(btnObj) {
+//            if (btnObj.className == "sort_desc")
+//                btnObj.className = "sort_asc";
+//            else
+//                btnObj.className = "sort_desc";
+//        }
 
         //启用
         function startFee() {
@@ -219,22 +219,26 @@
             })
         }
 
-        //时长升序降序
+        //基费升序降序
         function sortByBaseCost(btnObj) {
+
             //升序
             if (btnObj.className =="sort_desc"){
+
                 btnObj.className = "sort_asc";
                 $.ajax({
                     url:"/sort",
                     data:{
                         no:null,
-                        size:null,
+                        size:5,
                         flag:1
                     },
                     success:function (result) {
                         console.log(result)
-                        $(".emp").remove()
+//                        $(".emp").remove()
+                        $("#tab").children().remove()
                         $.each(result.list,function (i,domEle) {
+
                             addNewTr(domEle)
                         })
                     }
@@ -248,13 +252,15 @@
                     url:"/sort",
                     data:{
                         no:null,
-                        size:null,
+                        size:5,
                         flag:2
                     },
                     success:function (result) {
                         console.log(result)
-                        $(".emp").remove()
-                        $.each(result.list, function (i, domEle) {
+//                        $(".emp").remove()
+                        $("#tab").children().remove()
+                        $.each(result.list,function (i,domEle) {
+
                             addNewTr(domEle)
                         })
                     }
@@ -263,23 +269,25 @@
         }
 
 
-        //基费升序降序
+        //时长升序降序
         function sortByBaseDuration(btnObj) {
 
             //升序
-            if (btnObj.className ==" sort_desc"){
+            if (btnObj.className =="sort_desc"){
+
                 btnObj.className = "sort_asc";
                 $.ajax({
                     url:"/sort",
                     data:{
                         no:null,
-                        size:null,
+                        size:5,
                         flag:3
                     },
                     success:function (result) {
                         console.log(result)
-                        $(".emp").remove()
-                        $.each(result.list,function (i, domEle) {
+                        $("#tab").children().remove()
+                        $.each(result.list,function (i,domEle) {
+
                             addNewTr(domEle)
                         })
                     }
@@ -293,14 +301,17 @@
                     url:"/sort",
                     data:{
                         no:null,
-                        size:null,
+                        size:5,
                         flag:4
                     },
                     success:function (result) {
                         console.log(result)
-                        $(".emp").remove()
-                        $.each(result.list,function (i, domEle) {
-                            addNewTr(domEle);
+
+                        $("#tab").children().remove()
+
+                        $.each(result.list,function (i,domEle) {
+
+                            addNewTr(domEle)
                         })
                     }
                 })
@@ -366,7 +377,7 @@
             </tr>
             </thead>
 
-            <tbody id="tab" class="empp">
+            <tbody id="tab" class="emp">
 
             </tbody>
 
