@@ -181,6 +181,7 @@ public class ServiceController {
         System.out.println(idCard);
 
 
+        System.out.println("55");
 
         return new AjaxResult(idCard);
     }
