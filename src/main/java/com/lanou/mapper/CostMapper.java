@@ -22,4 +22,6 @@ public interface CostMapper {
     //查找全部
     List<Cost> findAllCost();
 
+    Cost findByType(String type);
+
 }

@@ -65,6 +65,8 @@ public class CostServiceImpl implements CostService{
         return queryCostByPage(null,pageSize);
     }
 
+
+
     public PageInfo<Cost> queryCostByPage(Integer pageNo,Integer pageSize){
 
         //判断参数的合法性
@@ -84,4 +86,11 @@ public class CostServiceImpl implements CostService{
 
         return pageInfo;
     }
+
+    @Override
+    public Cost findByType(String type) {
+        return mapper.findByType(type);
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.lanou.controller;
 
 
 import com.lanou.bean.Account;
+import com.lanou.bean.Cost;
 import com.lanou.bean.Servicee;
 import com.lanou.service.impl.AccountServiceImpl;
 import com.lanou.service.impl.CostServiceImpl;
@@ -33,7 +34,7 @@ public class ServiceController {
     private AccountServiceImpl accountService;
 
     @Resource
-    private CostServiceImpl costService;
+    private CostServiceImpl costServicee;
 
     @RequestMapping(value = "/se_list")
     public String frontPageList(){
@@ -76,12 +77,20 @@ public class ServiceController {
      */
     @ResponseBody
     @RequestMapping(value = "/addSe")
-    public AjaxResult frontPageAddService(Servicee servicee){
+    public AjaxResult frontPageAddService(Servicee servicee,
+                                          @RequestParam("CType")String costType){
 
         servicee.setStatus("0");
         servicee.setCreateDate((new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())));
 
-        System.out.println("servicee:---"+servicee);
+
+        Cost byType = costServicee.findByType(costType);
+
+        Integer costId = byType.getCostId();
+
+        servicee.setCostId(costId);
+
+//        System.out.println("servicee:---"+servicee);
 
         int i = service.addService(servicee);
 
@@ -171,17 +180,7 @@ public class ServiceController {
     @ResponseBody
     @RequestMapping(value = "/findByIDCard")
     public AjaxResult frontPageAccount(@RequestParam("IDCard")String id){
-
-        System.out.println(id);
-
-//        String id2 = (String) id;
-
         Account idCard = accountService.findByIDCard(id);
-
-        System.out.println(idCard);
-
-
-        System.out.println("55");
 
         return new AjaxResult(idCard);
     }
@@ -189,7 +188,14 @@ public class ServiceController {
     /**
      * 查询资费类型
      */
+    @ResponseBody
+    @RequestMapping(value = "/findAllCost")
+    public AjaxResult frontPageCost(){
 
+        List<Cost> cost = costServicee.findAllCost();
+
+        return new AjaxResult(cost);
+    }
 
 
 }

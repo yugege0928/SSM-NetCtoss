@@ -32,7 +32,7 @@
                     type:"post",
                     data:{
                         accountId:$("#username").val(),
-                        costId:$("#sel option:selected").text(),
+                        CType:$("#sel option:selected").text(),
                         unixHost:$("#IP").val(),
                         osUsername:$("#OSusername").val(),
                         loginPasswd:$("#password").val()
@@ -53,13 +53,27 @@
                         IDCard:$("#IDcard").val()
                     },
                     success:function (result) {
-                        alert(666)
                         console.log(result)
                         $("#username").val(result.data.accountId)
                     }
                 })
             }
 
+            function allCost() {
+                $.ajax({
+                    type:"post",
+                    url:"/findAllCost",
+                    success:function (result) {
+                        console.log(result)
+                        for (var i = 0; i < result.data.length;i++){
+//                            $("#sel").val(result.name)
+                            $("#sel").append("<option>"+result.data[i].name+"</option>")
+                        }
+                    }
+                })
+            }
+
+            allCost();
 
         </script>
     </head>
@@ -117,10 +131,6 @@
                         <!--<option >包 40 小时</option>-->
                         <!--<option >包 60 小时</option>-->
                         <!--<option >包月</option>-->
-                        <option >1</option>
-                        <option >2</option>
-                        <option >3</option>
-                        <option >4</option>
                     </select>                        
                 </div> 
                 <div class="text_info clearfix"><span>服务器 IP：</span></div>

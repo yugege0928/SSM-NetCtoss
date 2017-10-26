@@ -28,6 +28,14 @@
         <include refid="Base_Column_List"/>
         FROM cost
     </select>
+
+    <select id="findByType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cost
+        WHERE name = #{type}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cost
     where cost_id = #{costId,jdbcType=INTEGER}

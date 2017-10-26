@@ -24,4 +24,6 @@ public interface CostService {
 
     PageInfo<Cost> getPageInfo(Integer pageSize);
 
+    Cost findByType(String type);
+
 }
