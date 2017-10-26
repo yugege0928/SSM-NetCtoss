@@ -180,6 +180,8 @@ public class ServiceController {
 
         System.out.println(idCard);
 
+
+
         return new AjaxResult(idCard);
     }
 
