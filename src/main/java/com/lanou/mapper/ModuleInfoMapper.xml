@@ -28,4 +28,12 @@
       </if>
     </trim>
   </insert>
+
+  <select id="findModuleByRoleId" resultMap="BaseResultMap">
+    SELECT
+    * FROM module_info WHERE module_id IN (
+    SELECT module_id FROM role_module WHERE role_id =#{roleId}
+    )
+  </select>
+
 </mapper>
