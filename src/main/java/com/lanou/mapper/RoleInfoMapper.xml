@@ -26,11 +26,14 @@
     </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from role_info
-    where role_id = #{roleId,jdbcType=INTEGER}
+    delete from role_module
+    where role_id = #{roleId}
   </delete>
+    <delete id="deleterRole">
+        DELETE FROM role_info WHERE role_id=#{roleId}
+    </delete>
 
-  <insert id="insert" parameterType="com.lanou.bean.RoleInfo">
+    <insert id="insert" parameterType="com.lanou.bean.RoleInfo">
     insert into role_info (role_id, name)
     values (#{roleId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
   </insert>
@@ -67,4 +70,18 @@
     set name = #{name,jdbcType=VARCHAR}
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
+
+    <update id="updateByRole" parameterType="com.lanou.bean.RoleInfo">
+        UPDATE role_info SET name=#{name} where role_id=#{roleId}
+    </update>
+
+    <insert id="updaRoleModule" >
+        INSERT INTO role_module VALUES (#{roleId},#{moduleId})
+    </insert>
+
+    <insert id="insertRole" parameterType="com.lanou.bean.RoleInfo" useGeneratedKeys="true" keyProperty="roleId">
+    INSERT INTO role_info VALUES (NULL ,#{name})
+    </insert>
+
+
 </mapper>

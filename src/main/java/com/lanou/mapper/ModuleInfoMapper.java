@@ -10,4 +10,6 @@ public interface ModuleInfoMapper {
     int insertSelective(ModuleInfo record);
 
      List<ModuleInfo> findModuleByRoleId(Integer roleId);
+
+    List<ModuleInfo> findAllMoudule();
 }

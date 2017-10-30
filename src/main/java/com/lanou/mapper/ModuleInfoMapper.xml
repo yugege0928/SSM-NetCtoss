@@ -35,5 +35,9 @@
     SELECT module_id FROM role_module WHERE role_id =#{roleId}
     )
   </select>
+  <select id="findAllMoudule" resultMap="BaseResultMap">
+    SELECT
+    * FROM module_info
+  </select>
 
 </mapper>

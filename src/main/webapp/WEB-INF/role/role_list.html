@@ -13,8 +13,6 @@
             document.getElementById("operate_result_info").style.display = "block";
         }
 
-        getAllRole();
-
         function getAllRole() {
             $.ajax({
                 url: "/allRole",
@@ -50,6 +48,143 @@
             var Rtr = $("<tr></tr>").append(Rtr1).append(Rtr2).append(Rtr3).append(Rtr4)
 
             $("#tab").append(Rtr)
+        }
+//---------------------------
+        var pageSize = 5;
+
+        function deleteRole() {
+            var r = window.confirm("确定要删除此角色吗？");
+            document.getElementById("operate_result_info").style.display = "block";
+        }
+
+        function findAllRole(no, size) {
+            $.ajax({
+                url: "/findAllRole",
+                data: {
+                    no: no,
+                    size: size
+                },
+                success: function (result) {
+                    $("#tab").children().remove();
+                    for (var i = 0; i < result.data.list.length; i++) {
+                        addNewTr(result.data.list[i], result.data.pageNum);
+                    }
+                    pageInfo(result.data);
+                }
+            })
+        }
+        findAllRole(1, 5);
+
+        function addNewTr(msg, pageNum) {
+            var tr = $("<tr></tr>").attr("id", "tr" + msg.roleId);
+            $("<td></td>").append(msg.roleId).appendTo(tr);
+            $("<td></td>").append(msg.name).appendTo(tr);
+            var td = $("<td></td>");
+            for (var i = 0; i < msg.moduleInfoList.length; i++) {
+                td.append(msg.moduleInfoList[i].name);
+                if (i < msg.moduleInfoList.length - 1) {
+                    td.append(", ");
+                }
+            }
+            td.appendTo(tr);
+            var controller = $("<td></td>");
+            $("<input type='button' value='修改' class='btn_modify'/>").click(saveRoleId).attr("roleId", msg.roleId)
+                    .appendTo(controller);
+            $("<input type='button' value='删除' class='btn_delete'/>").click(deleteRole).attr("pageNum", pageNum)
+                    .attr("num", msg.roleId).appendTo(controller);
+            controller.appendTo(tr);
+            $("#tab").append(tr);
+        }
+
+        // 添加页码
+        function pageInfo(type) {
+            $("#baseCost").attr("num", type.pageNum);
+            $("#baseDuration").attr("num", type.pageNum);
+            $("#pages").children().remove();
+            var pa = $("#pages");
+            $("<a></a>").click(pages).append("首页").attr("no", 1).attr("size", pageSize).attr("href", "###").appendTo(pa);
+            if (type.isFirstPage) {
+                $("<a></a>").attr("id", "prePage").click(pages).append("上一页").attr("no", 1).attr("size", pageSize)
+                        .attr("href", "###").appendTo(pa);
+            } else {
+                $("<a></a>").attr("id", "prePage").click(pages).attr("no", type.prePage).attr("size", pageSize)
+                        .append("上一页").attr("href", "###").appendTo(pa);
+            }
+            for (var i = 0; i < type.navigatepageNums.length; i++) {
+                if (type.navigatepageNums[i] == type.pageNum) {
+                    $("<a></a>").click(pages).attr("no", type.navigatepageNums[i]).attr("class", "current_page").attr("size", pageSize).append(type.navigatepageNums[i]).appendTo(pa);
+                } else {
+                    $("<a></a>").click(pages).attr("no", type.navigatepageNums[i]).attr("size", pageSize).append(type.navigatepageNums[i]).appendTo(pa);
+                }
+            }
+            if (type.isLastPage) {
+                $("<a></a>").attr("id", "nextPage").click(pages).attr("no", type.lastPage).attr("size", pageSize).append("下一页").attr("href", "###").appendTo(pa);
+            } else {
+                $("<a></a>").attr("id", "nextPage").click(pages).attr("no", type.nextPage).attr("size", pageSize).append("下一页").attr("href", "###").appendTo(pa);
+            }
+            $("<a></a>").click(pages).append("末页").attr("no", type.lastPage).attr("size", pageSize).attr("href", "###").appendTo(pa);
+        }
+
+        // 之后获取信息
+        function pages() {
+            var no = $(this).attr("no");
+            var size = $(this).attr("size");
+            $.ajax({
+                url: "/findAllRole",
+                data: {
+                    no: no,
+                    size: size
+                },
+                success: function (result) {
+                    $("#tab").children().remove();
+                    for (var i = 0; i < result.data.list.length; i++) {
+                        addNewTr(result.data.list[i], result.data.pageNum);
+                    }
+                    pageInfo(result.data);
+                }
+            })
+        }
+
+        // 保存roleid
+        function saveRoleId() {
+            $.ajax({
+                url: "/saveRoleId",
+                data: {
+                    roleId: $(this).attr("roleId")
+                },
+                success: function (result) {
+                    window.location.href = "/ro_modi";
+                }
+            });
+        }
+
+        // 删除role
+        function deleteRole() {
+            var r = window.confirm("确定要删除此角色吗？");
+            if (r) {
+                var pageNum = $(this).attr("pageNum");
+                $.ajax({
+                    url: "/deleteR",
+                    data: {
+                        roleId: $(this).attr("num")
+                    },
+                    success: function (result) {
+                        $("#tr" + result.data.roleId).remove();
+                        if ($("#tab").children().length == 0) {
+                            $("#prePage").click();
+                        } else {
+                            findAllRole(pageNum, 5);
+                        }
+                    }
+                });
+                document.getElementById("operate_result_info").innerText = "删除成功！";
+                document.getElementById("operate_result_info").style.display = "block";
+                window.setTimeout(function () {
+                    document.getElementById("operate_result_info").style.display = "none";
+                }, 1500);
+            } else {
+
+            }
         }
 
 

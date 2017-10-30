@@ -1,5 +1,6 @@
 package com.lanou.service;
 
+import com.github.pagehelper.PageInfo;
 import com.lanou.bean.RoleInfo;
 
 import java.util.List;
@@ -9,4 +10,14 @@ import java.util.List;
  */
 public interface RoleInfoService {
     List<RoleInfo> findAllRole();
+
+    PageInfo<RoleInfo> findRolePageInfo(Integer no,Integer pagesize);
+
+    RoleInfo findRoleByRoleID(Integer roleId);
+
+    void updateRole(RoleInfo role);
+
+    void addRole(RoleInfo role);
+
+    void deleteRole(RoleInfo roleInfo);
 }
