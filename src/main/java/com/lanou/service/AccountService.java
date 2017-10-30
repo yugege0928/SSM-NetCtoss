@@ -25,4 +25,5 @@ public interface AccountService {
 
     Account findByIDCard(String id);
 
+    List<Account> findByCon(Account account);
 }

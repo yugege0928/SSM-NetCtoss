@@ -65,6 +65,11 @@ public class ServicesServiceImpl implements ServicesService {
         return queryCostByPage(null,pageSize);
     }
 
+    @Override
+    public List<Servicee> findByTj(String osUsername, String unixHost,String idcardNo) {
+        return mapper.selectServiceByTj(osUsername, unixHost,idcardNo);
+    }
+
     public PageInfo<Servicee> queryCostByPage(Integer pageNo,Integer pageSize){
 
         //判断参数的合法性

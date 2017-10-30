@@ -24,4 +24,6 @@ public interface ServicesService {
 
      PageInfo<Servicee> getPageInfo(Integer pageSize);
 
+     List<Servicee> findByTj(String osUsername, String unixHost,String idcardNo);
+
 }

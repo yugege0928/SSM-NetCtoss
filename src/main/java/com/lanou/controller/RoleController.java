@@ -105,9 +105,9 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/addRole",method = RequestMethod.POST)
-    public AjaxResult adRole(@RequestParam("moduleId")String Moduleid,
-                                 @RequestParam("roleName")String roleName){
+    @RequestMapping(value = "/addRole")
+    public AjaxResult adRole(@RequestParam(value = "moduleId",required = false)String Moduleid,
+                                 @RequestParam(value = "roleName",required = false)String roleName){
         System.out.println("Moduleid:---"+Moduleid);
         System.out.println("roleName:---"+roleName);
         String[] split = Moduleid.split(",");

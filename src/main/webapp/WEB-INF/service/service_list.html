@@ -58,6 +58,27 @@
             })
         }
 
+        function findBycon() {
+            $.ajax({
+                type:"get",
+                url:"/findByT",
+                data:{
+                    idcardNo: $("#search_idCard").val(),
+                    unixHost: $("#search_IPname").val(),
+                    osUsername: $("#search_OSName").val(),
+                },
+                success:function (result) {
+                    console.log(result)
+                    $("#tab").children().remove();
+                    for (var i = 0;i < result.data.length;i++){
+                        addNewTr(result.data[i])
+                    }
+                }
+            })
+        }
+
+
+
         //显示全部
         //        直接查询并显示全部
         function findAllService() {
@@ -101,7 +122,6 @@
 
         //删除
         function deleteService() {
-            var deleta = window.confirm("确定要删除此业务账号吗？删除后将不能恢复。");
 
             var deleteNum = $(this).attr("num2");
 
@@ -259,9 +279,9 @@
     <!--<form action="" method="">-->
     <!--查询-->
     <div class="search_add">
-        <div>OS 账号：<input type="text" value="" class="width100 text_search"/></div>
-        <div>服务器 IP：<input type="text" value="" class="width100 text_search"/></div>
-        <div>身份证：<input type="text" value="" class="text_search"/></div>
+        <div>OS 账号：<input type="text" id="search_OSName" class="width100 text_search"/></div>
+        <div>服务器 IP：<input type="text" id="search_IPname" class="width100 text_search"/></div>
+        <div>身份证：<input type="text" id="search_idCard" class="text_search"/></div>
         <div>状态：
             <select class="select_search">
                 <option>全部</option>
@@ -270,7 +290,7 @@
                 <option>删除</option>
             </select>
         </div>
-        <div><input type="button" value="搜索" class="btn_search"/></div>
+        <div><input type="button" value="搜索" class="btn_search" onclick=findBycon() /></div>
         <input type="button" value="增加" class="btn_add" onclick="location.href='/se_add';"/>
     </div>
     <!--删除的操作提示-->

@@ -24,4 +24,6 @@ public interface AccountMapper {
     //根据身份证查找对应账号
     Account findAccountByIDCard(String IDCard);
 
+    List<Account> findByAll(Account account);
+
 }

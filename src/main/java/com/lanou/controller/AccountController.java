@@ -158,4 +158,29 @@ public class AccountController {
         return service.getPageInfo(pageSize);
     }
 
+    /**
+     * 输入栏查询
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findBC",method = RequestMethod.POST)
+    public AjaxResult findByCondition(Account account){
+
+        if (account.getStatus() == null || account.getLoginName().trim().isEmpty()) {
+            account.setLoginName(null);
+        }
+        if (account.getRealName() == null || account.getRealName().trim().isEmpty()) {
+            account.setRealName(null);
+        }
+        if (account.getIdcardNo() == null || account.getIdcardNo().trim().isEmpty()) {
+            account.setIdcardNo(null);
+        }
+        if (account.getStatus() == null || account.getStatus().trim().isEmpty()) {
+            account.setStatus(null);
+        }
+
+        System.out.println("account:---"+account);
+        List<Account> byCon = service.findByCon(account);
+        return new AjaxResult(byCon);
+    }
+
 }

@@ -264,6 +264,18 @@ public class ServiceController {
         return service.getPageInfo(pageSize);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/findByT",method = RequestMethod.GET)
+    public AjaxResult findAllByTj(@RequestParam("osUsername") String osUsername,
+                                  @RequestParam("unixHost") String unixHost,
+                                  @RequestParam("idcardNo") String idcardNo){
+
+        System.out.println(osUsername+unixHost);
+
+        List<Servicee> byTj = service.findByTj(osUsername, unixHost,idcardNo);
+
+        return new AjaxResult(byTj);
+    }
 
 
 }

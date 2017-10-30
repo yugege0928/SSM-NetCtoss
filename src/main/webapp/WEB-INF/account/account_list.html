@@ -111,6 +111,26 @@
             })
         }
 
+        function findBycon() {
+            $.ajax({
+                type:"post",
+                url:"/findBC",
+                data:{
+                    idcardNo: $("#search_idCard").val(),
+                    realName: $("#search_name").val(),
+                    loginName: $("#search_loginName").val(),
+//                    status: $("#search_status").val(),
+                },
+                success:function (result) {
+                    console.log(result)
+                    $("#tab2").children().remove();
+                    for (var i = 0;i < result.data.length;i++){
+                        addNewTrr(result.data[i])
+                    }
+                }
+            })
+        }
+
         //        直接查询并显示全部
         function findAllAccount() {
             $.ajax({
@@ -218,19 +238,18 @@
     <!--<form action="" method="">-->
         <!--查询-->
         <div class="search_add">
-            <div>身份证：<input type="text" value="不验证" class="text_search"/></div>
-            <div>姓名：<input type="text" class="width70 text_search" value="不验证"/></div>
-            <div>登录名：<input type="text" value="不验证" class="text_search"/></div>
+            <div>身份证：<input type="text"  class="text_search" id="search_idCard"/></div>
+            <div>姓名：<input type="text" class="width70 text_search" id="search_name"/></div>
+            <div>登录名：<input type="text" class="text_search" id="search_loginName"/></div>
             <div>
                 状态：
-                <select class="select_search">
-                    <option>全部</option>
-                    <option>开通</option>
-                    <option>暂停</option>
-                    <option>删除</option>
+                <select class="select_search" id="search_status">
+                    <option id="ope">开通</option>
+                    <option id="stop">暂停</option>
+                    <option id="del">删除</option>
                 </select>
             </div>
-            <div><input type="button" value="搜索" class="btn_search"/></div>
+            <div><input type="button" value="搜索" class="btn_search" onclick="findBycon()"/></div>
             <input type="button" value="增加" class="btn_add" id="Abtn" onclick="location.href='/act_add';"/>
         </div>
         <!--删除等的操作提示-->

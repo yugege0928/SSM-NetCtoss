@@ -88,5 +88,10 @@ public class AccountServiceImpl implements AccountService {
         return mapper.findAccountByIDCard(id);
     }
 
+    @Override
+    public List<Account> findByCon(Account account) {
+        return mapper.findByAll(account);
+    }
+
 
 }

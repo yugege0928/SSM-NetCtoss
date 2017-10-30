@@ -43,7 +43,7 @@
 
         // 修改保存
         function saveModi() {
-            alert(666)
+            alert(777)
             var str = "";
             if (type) {
                 $("input:checkbox:checked").each(function () {
@@ -52,7 +52,7 @@
                 alert(str)
                 $.ajax({
                     url: "/addRole",
-                    type: "post",
+//                    type: "post",
                     data: {
                         moduleId: str,
                         roleName: $("#roleName").val()
